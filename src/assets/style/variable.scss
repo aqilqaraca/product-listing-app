@@ -1,0 +1,7 @@
+$textColor : #1D1F22;
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

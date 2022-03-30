@@ -1,0 +1,119 @@
+@import "../../assets/style/variable.scss";
+
+.bag-container {
+    width: 325px;
+    top: 51px;
+    right: 0;
+    position: absolute;
+    padding: 8px;
+    background-color: #fff;
+    z-index: 999;
+    cursor: auto;
+
+    h4 {
+        font-size: 16px;
+        font-weight: 700;
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    ul {
+        padding-top: 25px;
+
+        li {
+            display: flex;
+            height: 137px;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+    }
+
+    .bag-item--content {
+        width: 55%;
+
+        p {
+            font-weight: 300;
+            line-height: 160%;
+            color: $textColor;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        h5 {
+            color: $textColor;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+
+    .bag-item--part {
+        width: 45%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .bag-item--count {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+
+        button {
+            border: 1px solid $textColor;
+            width: 24px;
+            height: 24px;
+            @include center;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    }
+
+    .bag-item--image {
+        height: 100%;
+        width: 100%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .bag-buttons {
+        display: flex;
+        gap: 12px;
+        padding-top: 37px;
+
+        button {
+            @include center;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 14;
+            width: 50%;
+            height: 43px;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .view {
+            border: 1px solid $textColor;
+            color: $textColor;
+        }
+
+        .check {
+            background-color: #5ECE7B;
+            color: #fff;
+            a{
+                color: #fff;
+            }
+        }
+    }
+}

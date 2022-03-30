@@ -1,0 +1,123 @@
+@import "../../assets/style/variable.scss";
+
+#product-details {
+    .product-details--content {
+        display: flex;
+        gap: 100px;
+
+        .product-details--images {
+            display: flex;
+            gap: 20px;
+            width: 55%;
+
+            &--small {
+                figure {
+                    margin-bottom: 32px;
+                    width: 80px;
+                    height: 80px;
+                    cursor: pointer;
+
+                    img {
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            &--big {
+                figure {
+                    height: 511px;
+                    width: 100%;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+
+        .product-details--info {
+            width: 45%;
+
+            h5 {
+                color: $textColor;
+                font-size: 30px;
+                font-weight: 600;
+                padding-bottom: 16px;
+            }
+
+            p {
+                color: $textColor;
+                font-size: 30px;
+                font-weight: 400;
+            }
+
+            .product-details--attr--wrapper{
+                padding-bottom: 40px;
+                .product-details--attributes {
+                    padding-top: 43px;
+    
+                    h4 {
+                        color: $textColor;
+                        font-size: 18px;
+                        font-weight: 700;
+                        padding-bottom: 8px;
+                    }
+                    ul{
+                        display: flex;
+                        gap: 12px;
+                        flex-wrap: wrap;
+                        li{
+                            border: 1px solid $textColor;
+                            width: 63px;
+                            height: 45px;
+                            color: $textColor;
+                            font-size: 18px;
+                            font-weight: 400;
+                            @include center;
+                            cursor: pointer;
+                            &.active{
+                                background-color: $textColor;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+            .product-details--price{
+                padding-bottom: 20px;
+                h4{
+                    text-transform: uppercase;
+                    color: $textColor;
+                    font-size: 18px;
+                    font-weight: 700;
+                    padding-bottom: 10px;
+                }
+                h5{
+                    color: $textColor;
+                    font-size: 25px;
+                    font-weight: 700;
+                    padding-bottom: 10px;
+                }
+            }
+            .add-to-card{
+                background-color: #5ECE7B;
+                cursor: pointer;
+                width: 292px;
+                height: 52px;
+                @include center;
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+                text-transform: uppercase;
+                margin-bottom: 40px;
+                &.out{
+                    background-color: gray;
+                }
+            }
+        }
+    }
+}
