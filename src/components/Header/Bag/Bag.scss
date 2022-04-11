@@ -1,4 +1,4 @@
-@import "../../assets/style/variable.scss";
+@import "../../../assets/style/variable.scss";
 
 .bag-container {
     width: 325px;
@@ -9,7 +9,7 @@
     background-color: #fff;
     z-index: 999;
     cursor: auto;
-
+    overflow-y: scroll;
     h4 {
         font-size: 16px;
         font-weight: 700;

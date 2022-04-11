@@ -2,112 +2,133 @@ import React, { Component } from "react";
 import "./ProductDetails.scss";
 import { connect } from "react-redux";
 import { setBagAction } from "../../store/actions";
+import ProductAttributes from "./ProductAttributes/ProductAttributes";
+import ProductImages from "./ProductImages/ProductImages";
+import { GET_PRODUCT_BY_ID } from "../../Graphql/queries";
+import { Query } from 'react-apollo';
+import { useParams, Link } from "react-router-dom";
+import { globalContext } from "../../context";
+import Parser from 'html-react-parser'
 class ProductDetails extends Component {
+  static contextType = globalContext
   constructor() {
-    super();
+    super()
     this.state = {
-      imageIndex: null,
-      attrIndex: null,
-    };
+      errorMessage: "",
+      selectedAttr : null
+    }
   }
   render() {
-    const product = this.props.product;
     const currency = this.props.currency;
+    const productId = this.props.router.params.id
+    const { globalAttr } = this.context
+    const sendToCard = (data) => {
+      let attrArray = []
+      data.product.attributes.map(attr => {
+        attrArray.push(attr.id)
+      })
+      let allFounded = attrArray.every(ai => globalAttr.includes(ai));
+      if (allFounded) {
+        this.props.setBagAction({ ...data.product, count: 1, pID: Date.now(), selectedAttr : this.state.selectedAttr })
+        this.setState({ errorMessage: "" })
+      }
+      else {
+        this.setState({ errorMessage: "* Select all features!" })
+      }
+    }
     return (
-      <main>
-        <section id="product-details">
-          <div className="container">
-            <div className="product-details--content">
-              <div className="product-details--images">
-                <div className="product-details--images--small">
-                  {product.gallery.map((item, index) => (
-                    <figure
-                      onClick={() => this.setState({ imageIndex: index })}
-                    >
-                      <img src={item} />
-                    </figure>
-                  ))}
-                </div>
-                <div className="product-details--images--big">
-                  <figure>
-                    <img
-                      src={
-                        this.state.imageIndex
-                          ? product.gallery[this.state.imageIndex]
-                          : product.gallery[0]
-                      }
-                    />
-                  </figure>
-                </div>
-              </div>
-              <div className="product-details--info">
-                <h5>{product.name}</h5>
-                <p>{product.brand}</p>
-                <div className="product-details--attr--wrapper">
-                  {product.attributes.map((attr) => (
-                    <div className="product-details--attributes">
-                      <h4>{attr.name} : </h4>
-                      <ul>
-                        {attr.items.map((item) => (
-                          <li
-                            key={item.id}
+      <Query query={GET_PRODUCT_BY_ID} variables={{ id: productId }}>
+        {({ data, loading, error }) => {
+          if (loading) {
+            return (
+              <span>Loading ...</span>
+            )
+          }
+          else if (error) {
+            return <span>Something went wrong</span>
+          }
+          else {
+            if (data) {
+              return (
+                <main>
+                  <section id="product-details">
+                    <div className="container">
+                      <Link to="/" className="to-all">{"<"} All products</Link>
+                      <div className="product-details--content">
+                        <ProductImages product={data.product} />
+                        <div className="product-details--info">
+                          <h5>{data.product.name}</h5>
+                          <p>{data.product.brand}</p>
+                          <div className="product-details--attr--wrapper">
+                            {data.product.attributes.map((attr) => (
+                              <ProductAttributes attr={attr} key={attr.id} setSelectedAttr={(set)=>this.setState(set)}/>
+                            ))}
+                          </div>
+                          <div className="product-details--price">
+                            <h4>price :</h4>
+                            {data.product.prices.filter(t => t.currency.label === currency.label).map((price, index) => (
+                              <h5 key={index}>
+                                {price.currency.symbol}
+                                {price.amount}
+                              </h5>
+                            ))}
+                          </div>
+                          <span className="errorMessage">{this.state.errorMessage}</span>
+                          <button
+                            disabled={!data.product.inStock}
+                            onClick={() => sendToCard(data)}
                             className={
-                              this.state.attrIndex == item.id ? "active" : null
-                            }
-                            onClick={() =>
-                              this.setState({ attrIndex: item.id })
+                              data.product.inStock ? "add-to-card" : "add-to-card out"
                             }
                           >
-                            {item.displayValue}
-                          </li>
-                        ))}
-                      </ul>
+                            {data.product.inStock ? "add to card" : "out of stock"}
+                          </button>
+                          <div className="product-details--desc">{Parser(data.product.description)}</div>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
-                <div className="product-details--price">
-                  <h4>price :</h4>
-                  {product.prices.map((price) => {
-                    if (price.currency.label == currency.label) {
-                      return (
-                        <h5>
-                          {price.currency.symbol}
-                          {price.amount}
-                        </h5>
-                      );
-                    }
-                  })}
-                </div>
-                  <button
-                    disabled={!product.inStock}
-                    onClick={() => this.props.setBagAction(product)}
-                    className={
-                      product.inStock ? "add-to-card" : "add-to-card out"
-                    }
-                  >
-                    {product.inStock ? "add to card" : "out of stock"}
-                  </button>
-                <div
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+                  </section>
+                </main>
+              )
+            }
+            else {
+              return (
+                <span>We can not find product !</span>
+              )
+            }
+          }
+        }}
+      </Query>
     );
   }
 }
 function mapStateToProps(state) {
-  const product = state.productReducer;
   const currency = state.currenciesReducer;
+  const { categories } = state.categoriesReducer
   return {
-    product,
     currency,
+    categories
   };
 }
 
 const dispatchToProps = {
   setBagAction,
 };
-export default connect(mapStateToProps, dispatchToProps)(ProductDetails);
+
+
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let params = useParams();
+    return (
+      <Component
+        {...props}
+        router={{ params }}
+      />
+    );
+  }
+
+  return ComponentWithRouterProp;
+}
+export default connect(mapStateToProps, dispatchToProps)(withRouter(ProductDetails));
+
+

@@ -23,6 +23,7 @@ button,input{
 
 .routes{
   position: relative;
+  min-height: 100vh;
 }
 .overlay{
   width: 100%;

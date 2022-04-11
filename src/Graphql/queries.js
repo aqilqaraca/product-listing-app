@@ -52,4 +52,34 @@ const GET_CURRENCY_CATEGORY = gql`
     }
   }
 `
-export { GET_CATEGORIES, GET_PRODUCTS,GET_CURRENCY_CATEGORY };
+
+const GET_PRODUCT_BY_ID = gql`
+query product($id : String!){
+    product(id: $id){
+      name,
+    inStock,
+    gallery,
+    description,
+    attributes{
+    	id,
+      name,
+      type,
+      items{
+        displayValue,
+        value,
+        id
+      }
+    },
+    prices{
+      currency{
+        label,
+        symbol
+      },
+      amount
+    },
+    brand
+  }
+}
+`;
+
+export { GET_CATEGORIES, GET_PRODUCTS, GET_CURRENCY_CATEGORY, GET_PRODUCT_BY_ID };

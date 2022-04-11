@@ -7,9 +7,9 @@ class Card extends Component {
     const bag = this.props.bag;
     const currency = this.props.currency;
     const totalPrice = [];
-    const result = bag.map((item) => {
+    bag.map((item) => {
       item.prices.map((price) => {
-        if (price.currency.label == currency.label) {
+        if (price.currency.label === currency.label) {
           totalPrice.push(price.amount * item.count);
         }
       });
@@ -22,12 +22,12 @@ class Card extends Component {
             <div className="card-lists">
               <ul>
                 {bag.map((item) => (
-                  <li>
+                  <li key={item.id}>
                     <div className="bag-item--content">
                       <p>{item.name}</p>
                       <h4>{item.brand}</h4>
                       {item.prices.map((price) => {
-                        if (price.currency.label == currency.label) {
+                        if (price.currency.label === currency.label) {
                           return (
                             <h5>
                               {price.currency.symbol}
@@ -54,7 +54,7 @@ class Card extends Component {
                         </button>
                       </div>
                       <div className="bag-item--image">
-                        <img src={item.gallery[0]} alt="" />
+                        <img src={item.gallery[0]} alt="product" />
                       </div>
                     </div>
                   </li>

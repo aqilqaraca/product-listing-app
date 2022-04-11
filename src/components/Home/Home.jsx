@@ -1,35 +1,35 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import "./Home.scss";
 import { connect } from 'react-redux';
 import { GET_PRODUCTS } from "../../Graphql/queries";
 import { Query } from 'react-apollo';
 import Product from '../Product/Product';
-class Home extends Component{
-    render(){
-        return(
+class Home extends Component {
+    render() {
+        return (
             <main>
                 <div className="container">
                     <div className="products-wrap">
                         <h4>{this.props.categories}</h4>
-                        <Query query={GET_PRODUCTS} variables={{title : this.props.categories}}>
-                            {({data,loading,error})=>{
-                                if(loading){
-                                    return(
+                        <Query query={GET_PRODUCTS} variables={{ title: this.props.categories }}>
+                            {({ data, loading, error }) => {
+                                if (loading) {
+                                    return (
                                         <span>Loading ...</span>
                                     )
                                 }
-                                else if(error){
+                                else if (error) {
                                     return <span>Something went wrong</span>
                                 }
-                                else{
+                                else {
                                     return (
                                         <div className='products'>
-                                        {
-                                            data.category.products.map(product=>(
-                                                    <Product key={product.id} product={{...product, count : 1}}/>
-                                            ))
-                                        }
-                                    </div>
+                                            {
+                                                data.category.products.map((product) => (
+                                                    <Product key={product.id} product={{ ...product, count: 1 }} />
+                                                ))
+                                            }
+                                        </div>
                                     )
                                 }
                             }}
@@ -42,8 +42,8 @@ class Home extends Component{
 }
 
 
-function mapStateToProps(state){
-    const {categories} = state.categoriesReducer
+function mapStateToProps(state) {
+    const { categories } = state.categoriesReducer
     return {
         categories
     }

@@ -1,10 +1,18 @@
 @import "../../assets/style/variable.scss";
 
 #product-details {
+    .to-all{
+        text-decoration: none;
+        color: $textColor;
+        font-size: 22px;
+        &:hover{
+            font-weight: 600;
+        }
+    }
     .product-details--content {
         display: flex;
         gap: 100px;
-
+        padding-top: 30px;
         .product-details--images {
             display: flex;
             gap: 20px;
@@ -72,16 +80,21 @@
                         flex-wrap: wrap;
                         li{
                             border: 1px solid $textColor;
-                            width: 63px;
                             height: 45px;
                             color: $textColor;
                             font-size: 18px;
                             font-weight: 400;
                             @include center;
                             cursor: pointer;
+                            padding: 0 20px!important;
                             &.active{
                                 background-color: $textColor;
                                 color: #fff;
+                                padding: 5px;
+                                &.color{
+                                    width: 80px;
+                                    height: 62px;
+                                }
                             }
                         }
                     }
@@ -117,6 +130,19 @@
                 &.out{
                     background-color: gray;
                 }
+            }
+            .product-details--desc{
+                ul{
+                    list-style: circle;
+                    li{
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+            .errorMessage{
+                display: block;
+                color: tomato;
+                padding-bottom: 10px;
             }
         }
     }

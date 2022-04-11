@@ -1,7 +1,7 @@
 import { Component } from "react";
-import { GET_CURRENCY_CATEGORY } from "../../Graphql/queries";
+import { GET_CURRENCY_CATEGORY } from "../../../Graphql/queries";
 import { Query } from "react-apollo";
-import {setCurrenciesAction} from "../../store/actions"
+import {setCurrenciesAction} from "../../../store/actions"
 import {connect} from 'react-redux'
 class CurrencyCategory extends Component {
   render() {
@@ -12,8 +12,8 @@ class CurrencyCategory extends Component {
             <span>Loading ...</span>
           ) : (
             <ul>
-              {data.currencies.map((currency) => (
-                <li onClick={()=>this.props.setCurrenciesAction(currency)}>
+              {data.currencies.map((currency,index) => (
+                <li className="currency-category--item" key={index} onClick={()=>this.props.setCurrenciesAction(currency)}>
                   <span>{currency.symbol}</span>
                   <span>{currency.label}</span>
                 </li>

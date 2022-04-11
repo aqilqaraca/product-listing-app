@@ -4,25 +4,26 @@ import Home from "./components/Home/Home";
 import { Routes, Route } from "react-router-dom";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import Card from "./components/Card/Card";
+import { globalContext } from "./context";
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      bagShow: false,
-    };
-  }
+  static contextType = globalContext
   render() {
+    const {bagShow,setBagShow,setCurrencyShow} = this.context
+    const hide = ()=>{
+      setCurrencyShow(false)
+      setBagShow(false)
+    }
     return (
       <>
-        <Header onBagShow={(x)=>this.setState({bagShow : !x})}/>
-        <div className="routes">
+        <Header/>
+        <div className="routes" onClick={hide}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="card" element={<Card/>} />
           </Routes>
           {
-            this.state.bagShow ? <div className="overlay"></div> : null
+            bagShow ? <div className="overlay"></div> : null
           }
         </div>
       </>

@@ -4,6 +4,7 @@ export const SET_CURRENCIES = "SET_CURRENCIES"
 export const SET_BAG = "SET_BAG"
 export const SET_ITEM_COUNT = "SET_ITEM_COUNT"
 export const SET_ITEM_COUNT_DEC = "SET_ITEM_COUNT_DEC"
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const setCategoriesAction = (payload)=>{
     return {
         type : SET_CATEGORIES_ACTION,
@@ -42,6 +43,13 @@ export const setItemCountAction = (payload)=>{
 export const setItemCountActionDec = (payload)=>{
     return { 
         type : SET_ITEM_COUNT_DEC,
+        payload
+    }
+}
+
+export const deleteProductAction = (payload)=>{
+    return {
+        type:DELETE_PRODUCT,
         payload
     }
 }

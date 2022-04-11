@@ -1,22 +1,27 @@
 @import "../../assets/style/variable.scss";
-header{
+
+header {
     height: 80px;
     width: 100%;
-    .container{
+
+    .container {
         display: flex;
         align-items: center;
         height: 100%;
         justify-content: space-between;
-        .category-list{
+
+        .category-list {
             display: flex;
             gap: 32px;
-            &--item{
+
+            &--item {
                 text-transform: uppercase;
                 cursor: pointer;
                 position: relative;
                 padding: 0 16px;
-                &.active{
-                    &::after{
+
+                &.active {
+                    &::after {
                         content: "";
                         position: absolute;
                         background-color: #5ECE7B;
@@ -28,37 +33,50 @@ header{
                 }
             }
         }
-        .bag-wrapper{
+
+        .bag-wrapper {
             display: flex;
             align-items: center;
-            .price-category{
+
+            .price-category {
                 display: flex;
                 align-items: center;
                 padding-right: 22px;
                 position: relative;
                 cursor: pointer;
                 z-index: 999999;
-                span{
+
+                span {
                     padding-right: 10px;
                 }
-                .currency-category{
+
+                .currency-category {
                     position: absolute;
                     top: 25px;
                     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
                     @include center;
                     padding: 20px;
                     left: -20px;
-                    ul{
+
+                    ul {
                         display: flex;
                         flex-direction: column;
                         gap: 10px;
                     }
+
+                    .currency-category--item {
+                        &:hover {
+                            font-weight: 600;
+                        }
+                    }
                 }
             }
-            .bag{
+
+            .bag {
                 cursor: pointer;
                 position: relative;
-                .bag-items--length{
+
+                .bag-items--length {
                     position: absolute;
                     border-radius: 50%;
                     width: 20px;

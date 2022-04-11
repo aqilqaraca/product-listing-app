@@ -1,4 +1,4 @@
-import { SET_BAG, SET_CATEGORIES_ACTION,SET_CURRENCIES,SET_ITEM_COUNT,SET_ITEM_COUNT_DEC,SET_PRODUCTS } from "./actions";
+import { SET_BAG, SET_CATEGORIES_ACTION,SET_CURRENCIES,SET_ITEM_COUNT,SET_ITEM_COUNT_DEC,SET_PRODUCTS,DELETE_PRODUCT } from "./actions";
 
 const initialState = {
     categories : "all"
@@ -41,7 +41,7 @@ export const bagReducer = (state=[], {type,payload}) =>{
             }
         case SET_ITEM_COUNT : 
             return state.map(item=>{
-                if(item.id == payload){
+                if(item.pID === payload){
                     return {...item, count : item.count +1}
                 }
                 else{
@@ -50,7 +50,7 @@ export const bagReducer = (state=[], {type,payload}) =>{
             })
         case SET_ITEM_COUNT_DEC : 
         return state.map(item=>{
-            if(item.id == payload){
+            if(item.pID === payload){
                 if(item.count > 1){
                     return {...item, count : item.count  - 1 }
                 }
@@ -62,6 +62,8 @@ export const bagReducer = (state=[], {type,payload}) =>{
                 return item
             }
         })
+        case DELETE_PRODUCT : 
+            return state.filter(item=>item.pID !== payload.pID)
         default : 
             return state
     }
